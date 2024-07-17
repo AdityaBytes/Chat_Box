@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chat History</title>
+    <style>
+        /* Reset CSS */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            background-color: #f4f4f4;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: #fff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            border-radius: 8px;
+        }
+
+        h1 {
+            font-size: 24px;
+            margin-bottom: 20px;
+            text-align: center;
+            color: #333;
+        }
+
+        .chat-item {
+            margin-bottom: 20px;
+            padding: 15px;
+            border-radius: 8px;
+            border: 1px solid #ccc;
+            background-color: #f9f9f9;
+        }
+
+        .chat-item p {
+            margin-bottom: 8px;
+        }
+
+        .chat-item p strong {
+            font-weight: bold;
+        }
+
+        .chat-item p:last-child {
+            margin-bottom: 0;
+        }
+
+        .button {
+            display: inline-block;
+            padding: 10px 20px;
+            margin-top: 10px;
+            background-color: #5cb85c;
+            color: #fff;
+            text-decoration: none;
+            border-radius: 4px;
+        }
+
+        .button:hover {
+            background-color: #4cae4c;
+        }
+
+        .delete-button {
+            display: inline-block;
+            padding: 10px 20px;
+            margin-top: 10px;
+            background-color: #d9534f;
+            color: #fff;
+            text-decoration: none;
+            border-radius: 4px;
+        }
+
+        .delete-button:hover {
+            background-color: #c9302c;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Chat History</h1>
+        <form method="get" action="/chats/new">
+            <button class="button">Add new</button>
+        </form>
+       
+        <div class="chat-list">
+            <% chats.forEach(chat => { %>
+                <div class="chat-item">
+                    <p><strong>From:</strong> <%= chat.from %></p>
+                    <p><strong>To:</strong> <%= chat.to %></p>
+                    <p><strong>Message:</strong> <%= chat.msg %></p>
+                    <p><strong>Created At:</strong> <%= chat.created_at.toLocaleString() %></p>
+                    <a href="/chats/edit/<%= chat._id %>" class="button">Edit</a>
+                    <form action="/chats/<%= chat._id %>?_method=DELETE" method="POST" style="display:inline;">
+                        <button type="submit" class="delete-button">Delete</button>
+                    </form>
+                </div>
+            <% }); %>
+        </div>
+    </div>
+</body>
+</html>
